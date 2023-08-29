@@ -13,7 +13,8 @@ export const config: Options.Testrunner = {
             transpileOnly: true
         }
     },
-    
+    headless: true,
+
     //
     // ==================
     // Specify Test Files
@@ -33,6 +34,7 @@ export const config: Options.Testrunner = {
     specs: [
         './test/specs/**/*.ts'
     ],
+   
     // Patterns to exclude.
     exclude: [
         // 'path/to/excluded/files'
@@ -61,8 +63,11 @@ export const config: Options.Testrunner = {
     //
     capabilities: [{
         browserName: 'chrome',
-    },{
-        browserName: 'firefox'  
+        'goog:chromeOptions': {
+            // to run chrome headless the following flags are required
+            // (see https://developers.google.com/web/updates/2017/04/headless-chrome)
+            // args: ['--headless', '--disable-gpu'],
+        }
     }],
 
     //
@@ -134,7 +139,12 @@ export const config: Options.Testrunner = {
     // Test reporter for stdout.
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter
-    reporters: ['dot'],
+    reporters: ['dot', ['allure', {
+        //
+        // If you are using the "allure" reporter you should define the directory where
+        // WebdriverIO should save all allure reports.
+        outputDir: './reports'
+    }]],
 
     
     //
